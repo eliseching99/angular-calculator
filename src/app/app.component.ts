@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+import { FormGroup, FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { CalculateService } from './calculate.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +11,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'calculator';
+  // constructor(){
+  //   let svc= new CalculateService()
+  //   svc.getText();
+  // }
 }
+
+
+
+
+
+

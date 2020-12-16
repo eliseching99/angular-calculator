@@ -1,0 +1,52 @@
+<form [formGroup]="calcForm" [hidden]="success" (ngSubmit)="result()">
+
+    <label>
+        First Number:
+        <input type="number" ng-model="firstNum" formControlName="firstNum" required>
+    </label>
+    <!-- form validation not working when enter number for name -->
+    <p class="error_message"
+        *ngIf=" calcForm.get('firstNum')?.hasError('required')  && (calcForm.touched|| calcForm.get('firstNum')?.hasError('pattern')) ">
+        Number is required</p>
+    <div class="error_message" *ngIf="calcForm.get('firstNum')?.errors?.pattern">
+        Must be Number
+    </div>
+
+    <label>
+        Second Number:
+        <input type="number" formControlName="secondNum">
+    </label>
+    <p class="error_message"
+        *ngIf=" calcForm.get('secondNum')?.hasError('required')  && (calcForm.touched|| calcForm.get('secondNum')?.hasError('pattern')) ">
+        Number is required</p>
+    <div class="error_message" *ngIf="calcForm.get('secondNum')?.errors?.pattern">
+        Must be Number
+    </div>
+    <label>Choose Operation</label>
+    <mat-radio-group formControlName="choice" aria-label="Select an option">
+
+        <mat-radio-button value="+">➕</mat-radio-button>
+        <mat-radio-button value="-">➖</mat-radio-button>
+        <mat-radio-button value="/">➗</mat-radio-button>
+        <mat-radio-button value="*">✖️</mat-radio-button>
+
+    </mat-radio-group>
+    <div class="error_message" *ngIf="calcForm.get('secondNum')?.value===0 && calcForm.get('choice')?.value==='/'"  >
+        Can't divide by Zero u dumbo!
+    </div>
+
+    <button type="submit" ng-click="submitted=true" [disabled]="!calcForm.valid">Submit</button>
+</form>
+
+    <p>{{calcForm.get('firstNum')?.value}}</p>
+    <p>{{calcForm.get('secondNum')?.value}}</p>
+    <!-- <p class="success">Result is {{result()}}</p> -->
+    <!-- *ngIf="success" -->
+    <div class="success" >
+        <p>Result: {{calculatedResult}}</p>
+    </div>
+
+
+    <p>
+        Form Status: {{ calcForm.status }}
+    </p>
