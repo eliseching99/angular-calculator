@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CalculateService } from '../calculate.service';
-
+import {
+  ZeroValidationError
+} from "./customvalidator.validator";
 @Component({
   selector: 'app-form-calculate',
   templateUrl: './form-calculate.component.html',
   styleUrls: ['./form-calculate.component.css']
 })
 export class FormCalculateComponent {
-  success=false;
   calculatedResult: number = 0;
+
+  
 
   calcForm = new FormGroup({
     firstNum: new FormControl('', [
@@ -20,14 +23,18 @@ export class FormCalculateComponent {
       Validators.required,
       Validators.pattern("^[0-9]*$"),
     ]),
-    choice: new FormControl('', Validators.required)
+    choice: new FormControl('', [Validators.required])
 
-  });
+  },
+  
+  {validators: ZeroValidationError('secondNum','choice')}
  
-  constructor(public calculateService: CalculateService) {
+  );
+
+   constructor(public calculateService: CalculateService) {
     calculateService.getText()
   }
-  
+
   result(): void {
     let x = this.calcForm.get('choice')?.value
     switch (x) {
@@ -55,13 +62,4 @@ export class FormCalculateComponent {
         return;
     }
   }
-
-
-
-
-
-  // constructor(){
-  //   let svc= new CalculateService()
-  //   svc.getText();
-  // }
 }
